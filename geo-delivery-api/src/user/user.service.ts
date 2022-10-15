@@ -5,7 +5,6 @@ import { compare, genSalt, hash } from 'bcryptjs';
 import { UserModel } from './user.model';
 import { UserCreateDto, UserInfoDto } from './dto';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './user.constants';
-import { UserInfo } from 'os';
 
 @Injectable()
 export class UserService {
