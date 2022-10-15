@@ -3,15 +3,20 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ModelType } from "@typegoose/typegoose/lib/types";
 import { compare, genSalt, hash } from 'bcryptjs';
 import { UserModel } from './user.model';
-import { UserCreateDto } from './dto';
+import { UserCreateDto, UserInfoDto } from './dto';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './user.constants';
+import { UserInfo } from 'os';
 
 @Injectable()
 export class UserService {
   constructor(@InjectModel(UserModel) private readonly userModel: ModelType<UserModel>) {}
 
-  async findUser(login: string) {
+  async findUserByLogin(login: string) {
     return this.userModel.findOne({ login }).exec();
+  }
+
+  async findUserById(userId: string) {
+    return this.userModel.findById(userId);
   }
 
   async createUser(dto: UserCreateDto) {
@@ -23,8 +28,27 @@ export class UserService {
     return newUser.save();
   }
 
+  async updateUser(userId: string, dto: UserCreateDto) {
+    return this.userModel.findByIdAndUpdate(userId, { ...dto }).exec();
+  }
+
+  async updateUserInfo(userId: string, dto: UserInfoDto) {
+    return this.userModel.findByIdAndUpdate(userId, { info: dto }).exec();
+  }
+
+  async deleteUser(userId: string) {
+    await this.userModel.findByIdAndDelete(userId).exec();
+  }
+
+  async checkUserExists(userId: string) {
+    const user = await this.findUserById(userId);
+    if (!user) {
+      throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
+    }
+  }
+
   async validateUser(login: string, password: string): Promise<{login: string}> {
-    const user = await this.findUser(login);
+    const user = await this.findUserByLogin(login);
     if (!user) {
       throw new UnauthorizedException(USER_NOT_FOUND_ERROR);
     }
