@@ -5,10 +5,10 @@ export class UserInfoDto {
   @IsString()
   name: string;
 
-  @IsEnum(UserType)
+  @IsString()
   city: string;
 
-  @IsString()
+  @IsEnum(UserType)
   type: string;
 
   @IsOptional()
