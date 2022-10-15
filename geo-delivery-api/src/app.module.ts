@@ -7,6 +7,7 @@ import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { ChatModule } from './chat/chat.module';
 import { getMongoConfig } from './configs';
+import { AutoModule } from './auto/auto.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { getMongoConfig } from './configs';
     UserModule,
     OrderModule,
     DeliveryModule,
-    ChatModule
+    ChatModule,
+    AutoModule
   ],
 })
 export class AppModule {}
