@@ -3,6 +3,7 @@ import { AutoService } from './auto.service';
 import { AutoController } from './auto.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { AutoModel } from './auto.model';
+import { UserModule } from '../user/user.module';
 
 @Module({
   providers: [AutoService],
@@ -14,7 +15,8 @@ import { AutoModel } from './auto.model';
           collection: 'Auto'
         }
       }
-    ])
+    ]),
+    UserModule
   ],
   controllers: [AutoController]
 })

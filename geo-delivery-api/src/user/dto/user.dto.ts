@@ -1,7 +1,6 @@
 import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { UserInfoDto } from './user-info.dto';
-import { UserType } from '../types';
-import { UserRole } from '../types/UserRole';
+import { UserRole } from '../types';
 
 export class UserDto {
   @IsString()
