@@ -5,6 +5,7 @@ import { compare, genSalt, hash } from 'bcryptjs';
 import { UserModel } from './user.model';
 import { UserCreateDto, UserInfoDto } from './dto';
 import { USER_NOT_FOUND_ERROR, WRONG_PASSWORD_ERROR } from './user.constants';
+import { UserListQueryParams } from './types';
 
 @Injectable()
 export class UserService {
@@ -18,11 +19,31 @@ export class UserService {
     return this.userModel.findById(userId);
   }
 
+  async getUserList(query: UserListQueryParams) {
+    const {
+      userRole,
+      usersPerPage = 100,
+      pageNumber = 0,
+    } = query;
+
+    return this.userModel
+      .find({ role: userRole })
+      .skip( pageNumber > 0 ? ( ( Number(pageNumber) ) * Number(usersPerPage) ) : 0 )
+      .limit( Number(usersPerPage) )
+      .exec()
+  }
+
   async createUser(dto: UserCreateDto) {
+    const {
+      login,
+      password,
+      role
+    } = dto;
     const salt = await genSalt(10);
     const newUser = new this.userModel({
-      login: dto.login,
-      passwordHash: await hash(dto.password, salt),
+      login,
+      passwordHash: await hash(password, salt),
+      role,
     });
     return newUser.save();
   }

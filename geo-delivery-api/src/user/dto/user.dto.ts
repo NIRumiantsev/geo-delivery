@@ -1,5 +1,7 @@
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { UserInfoDto } from './user-info.dto';
+import { UserType } from '../types';
+import { UserRole } from '../types/UserRole';
 
 export class UserDto {
   @IsString()
@@ -7,6 +9,9 @@ export class UserDto {
 
   @IsString()
   password: string;
+
+  @IsEnum(UserRole)
+  role: string;
 
   @IsOptional()
   @ValidateNested()

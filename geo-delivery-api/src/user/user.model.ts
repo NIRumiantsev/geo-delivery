@@ -9,9 +9,6 @@ class UserInfo {
   city: string;
 
   @prop()
-  type: string;
-
-  @prop()
   avatar?: string;
 
   @prop()
@@ -25,6 +22,9 @@ export class UserModel extends TimeStamps {
 
   @prop()
   passwordHash: string;
+
+  @prop()
+  role: string;
 
   @prop()
   info?: UserInfo
