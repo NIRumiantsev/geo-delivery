@@ -11,4 +11,16 @@ export class AutoService {
   async createAuto(autoList: AutoDto[]) {
     return this.autoModel.insertMany(autoList);
   }
+
+  async getAutoById(autoId: string) {
+    return this.autoModel.findById(autoId).exec();
+  }
+
+  async getUserAutoList(userId: string) {
+    return this.autoModel.find({ userId }).exec();
+  }
+
+  async deleteAutoById(autoId: string) {
+    return this.autoModel.findByIdAndDelete(autoId).exec();
+  }
 }
