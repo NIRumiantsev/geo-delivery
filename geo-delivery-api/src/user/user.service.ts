@@ -19,16 +19,18 @@ export class UserService {
     return this.userModel.findById(userId);
   }
 
-  async getUserList(query: UserListQueryParams) {
+  async getUserList(params: UserListQueryParams) {
     const {
       userRole,
       usersPerPage = 100,
       pageNumber = 0,
-    } = query;
+    } = params;
+
+    const query = userRole ? { role: userRole } : {};
 
     return this.userModel
-      .find({ role: userRole })
-      .skip( pageNumber > 0 ? ( ( Number(pageNumber) ) * Number(usersPerPage) ) : 0 )
+      .find(query)
+      .skip( Number(pageNumber) > 0 ? ( ( Number(pageNumber) ) * Number(usersPerPage) ) : 0 )
       .limit( Number(usersPerPage) )
       .exec()
   }
