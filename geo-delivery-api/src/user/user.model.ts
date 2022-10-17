@@ -13,6 +13,9 @@ class UserInfo {
 
   @prop()
   description?: string;
+
+  @prop({ type: () => [String] })
+  autoIdList?: string[];
 }
 
 export interface UserModel extends Base {}
