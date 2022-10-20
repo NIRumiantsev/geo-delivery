@@ -1,26 +1,33 @@
+import { ReactElement, useState } from 'react';
 import { observer } from 'mobx-react';
-import { container, identifiers } from 'core';
-import { UserStore, userStore } from 'core/stores';
-import { useEffect } from 'react';
-import { AuthService, UserService } from 'core/services';
+import { UserRole } from 'types';
+import { InfoForm, RegistrationForm, LoginForm } from 'UI';
+import { cn } from 'utils';
+
+import './AuthContainer.sass';
+
+const cnAuthContainer = cn('AuthContainer');
+
+type FormType = 'login' | 'register' | 'info';
 
 const AuthContainer = observer(() => {
-  const authService = container.get<AuthService>(identifiers.AUTH_SERVICE);
 
-  useEffect(() => {
-    const login = async () => {
-      await authService.login({
-        "login": "228228182212",
-        "password": "123"
-      });
-      await container.get<UserService>(identifiers.USER_SERVICE).getUser('634bd5184faf7699999d4931');
-    };
-    login();
-  }, []);
+  const [currentForm, setCurrentForm] = useState<FormType>('login');
+
+  const formsMap: Record<FormType, ReactElement> = {
+    login: <LoginForm additionalButtonAction={() => setCurrentForm('register')}/>,
+    register: (
+      <RegistrationForm
+        submitAction={() => setCurrentForm('info')}
+        additionalButtonAction={() => setCurrentForm('login')}
+      />
+    ),
+    info: <InfoForm/>
+  }
 
   return (
-    <div>
-      LOGIN { userStore.user?.login }
+    <div className={cnAuthContainer()}>
+      {formsMap[currentForm]}
     </div>
   )
 });

@@ -16,6 +16,13 @@ export class LoggerService {
     this.loggerStore.loggerQueue = [...this.loggerStore.loggerQueue, newItem];
   }
 
+  removeLoggerItem(itemId: string) {
+    const itemIndex = this.loggerStore.loggerQueue.findIndex((item) => item.id === itemId);
+    const newQueue = [...this.loggerStore.loggerQueue];
+    newQueue.splice(itemIndex, 1);
+    this.loggerStore.loggerQueue = newQueue;
+  }
+
   error(text: string) {
     const newItem: LoggerItem = {
       id: uuid(),

@@ -1,5 +1,4 @@
-import { makeAutoObservable, observable, makeObservable } from 'mobx';
-import { injectable } from 'inversify';
+import { makeAutoObservable } from 'mobx';
 import { UserDto } from 'types';
 
 class UserStore {

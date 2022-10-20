@@ -1,11 +1,11 @@
 import React from 'react';
-import { AuthPage } from 'UI';
+import { AppWrapper, AuthPage } from 'UI';
 
 function App() {
   return (
-    <div className="App">
+    <AppWrapper>
       <AuthPage/>
-    </div>
+    </AppWrapper>
   );
 }
 
