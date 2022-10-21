@@ -5,7 +5,7 @@ import '../../Form.sass';
 
 type RowProps = {
   title?: string,
-  children?: ReactElement | ReactElement[],
+  children?: ReactElement | (ReactElement | null)[] | null,
 };
 
 const Block = (props: RowProps) => {

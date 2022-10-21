@@ -1,6 +1,5 @@
 import { ReactElement, useState } from 'react';
 import { observer } from 'mobx-react';
-import { UserRole } from 'types';
 import { InfoForm, RegistrationForm, LoginForm } from 'UI';
 import { cn } from 'utils';
 
@@ -12,7 +11,7 @@ type FormType = 'login' | 'register' | 'info';
 
 const AuthContainer = observer(() => {
 
-  const [currentForm, setCurrentForm] = useState<FormType>('login');
+  const [currentForm, setCurrentForm] = useState<FormType>('register');
 
   const formsMap: Record<FormType, ReactElement> = {
     login: <LoginForm additionalButtonAction={() => setCurrentForm('register')}/>,

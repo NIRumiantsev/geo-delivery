@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { Container } from "inversify";
 import { identifiers } from './constants';
-import { ApiService, StorageService, UserService, LoggerService, AuthService } from './services';
+import { ApiService, StorageService, UserService, LoggerService, AuthService, AutoService } from './services';
 
 let container = new Container();
 
@@ -10,5 +10,6 @@ container.bind<ApiService>(identifiers.API_SERVICE).to(ApiService);
 container.bind<UserService>(identifiers.USER_SERVICE).to(UserService);
 container.bind<StorageService>(identifiers.STORAGE_SERVICE).to(StorageService);
 container.bind<AuthService>(identifiers.AUTH_SERVICE).to(AuthService);
+container.bind<AutoService>(identifiers.AUTO_SERVICE).to(AutoService);
 
 export { container, identifiers };

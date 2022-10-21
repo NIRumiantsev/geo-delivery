@@ -6,7 +6,7 @@ import { FormSize, FormState } from './types';
 import { cnForm } from './helpers';
 
 type FormProps = {
-  children: ReactElement | ReactElement[],
+  children: ReactElement | (ReactElement | null)[] | null,
   defaultState?: FormState,
   className?: string,
   style?: CSSProperties,
