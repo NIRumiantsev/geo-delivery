@@ -4,4 +4,5 @@ export const identifiers = {
   STORAGE_SERVICE: 'StorageService',
   LOGGER_SERVICE: 'LoggerService',
   AUTH_SERVICE: 'AuthService',
+  AUTO_SERVICE: 'AutoService',
 };

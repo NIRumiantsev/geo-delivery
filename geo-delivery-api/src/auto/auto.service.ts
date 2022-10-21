@@ -9,7 +9,7 @@ export class AutoService {
   constructor(@InjectModel(AutoModel) private readonly autoModel: ModelType<AutoModel>) {}
 
   async createAuto(autoList: AutoDto[]) {
-    return this.autoModel.insertMany(autoList);
+    return this.autoModel.insertMany(autoList).then((res) => res.map(({ _id }) => _id));
   }
 
   async getAutoById(autoId: string) {

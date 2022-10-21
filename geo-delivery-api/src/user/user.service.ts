@@ -55,7 +55,7 @@ export class UserService {
   }
 
   async updateUserInfo(userId: string, dto: UserInfoDto) {
-    return this.userModel.findByIdAndUpdate(userId, { info: dto }).exec();
+    return this.userModel.findByIdAndUpdate(userId, { info: dto }, { new: true }).exec();
   }
 
   async deleteUser(userId: string) {
