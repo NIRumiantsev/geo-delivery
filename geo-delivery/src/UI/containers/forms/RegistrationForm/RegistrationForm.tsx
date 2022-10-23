@@ -20,7 +20,7 @@ const RegistrationForm = (props: RegistrationFormProps) => {
   const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
 
   const handleSubmit = async (formState: AuthDto) => {
-    const role = storageService.getItem(USER_ROLE);
+    const role = storageService.getLocalItem(USER_ROLE);
     if (role) {
       await userService.createUser({ ...formState, role });
       await authService.login(formState);

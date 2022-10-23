@@ -15,7 +15,7 @@ const RoleSwitch = (props: RoleSwitchProps) => {
   const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
 
   const handleSelectRole = (role: UserRole) => {
-    storageService.setItem(USER_ROLE, role);
+    storageService.setLocalItem(USER_ROLE, role);
     handleChangeRole(role);
   };
 
