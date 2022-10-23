@@ -17,7 +17,7 @@ const InfoForm = observer(() => {
   const autoService = container.get<AutoService>(identifiers.AUTO_SERVICE);
 
   const userId = userStore.user?._id;
-  const userRole = storageService.getItem(USER_ROLE);
+  const userRole = storageService.getLocalItem(USER_ROLE);
 
   const handleSubmit = async (formState: UserInfoFormDto) => {
     if (!userId) return;

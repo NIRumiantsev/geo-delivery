@@ -11,7 +11,7 @@ const cnAuthPage = cn('AuthPage');
 
 const AuthPage = () => {
   const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
-  const userRole = storageService.getItem(USER_ROLE) as UserRole | null;
+  const userRole = storageService.getLocalItem(USER_ROLE) as UserRole | null;
 
   const [currentRole, setUserRole] = useState<UserRole | null>(userRole);
 
