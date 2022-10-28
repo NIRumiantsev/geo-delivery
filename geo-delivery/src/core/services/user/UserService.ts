@@ -32,4 +32,8 @@ export class UserService {
   async updateUserInfo(userId: string, dto: UserInfoDto) {
     this.userStore.user = await this.apiService.put<UserDto, UserInfoDto>(USER_ID_INFO_URL(userId), dto);
   }
+
+  removeCurrentUser() {
+    this.userStore.user = null;
+  }
 }

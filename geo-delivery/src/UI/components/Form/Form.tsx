@@ -4,6 +4,7 @@ import { FormContext } from './context';
 import { Field, Row, Footer, Block } from './subcomponents';
 import { FormSize, FormState } from './types';
 import { cnForm } from './helpers';
+import { Typography } from '@mui/material';
 
 type FormProps = {
   children: ReactElement | (ReactElement | null)[] | null,
@@ -81,7 +82,12 @@ const Form = (props: FormProps) => {
         className={`${cnForm()} ${className}`}
         style={style}
       >
-        {title}
+        <Typography
+          variant="h5"
+          color="inherit"
+        >
+          {title}
+        </Typography>
         {children}
       </div>
     </FormContext.Provider>

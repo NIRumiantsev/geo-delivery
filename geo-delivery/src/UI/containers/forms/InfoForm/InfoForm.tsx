@@ -10,7 +10,13 @@ import { InfoFormAuto } from './subcomponents';
 
 const requiredFields = ['name', 'city', 'type'];
 
-const InfoForm = observer(() => {
+type InfoFormProps = {
+  submitAction?: () => void,
+};
+
+const InfoForm = observer((props: InfoFormProps) => {
+  const { submitAction = () => {} } = props;
+
   const userService = container.get<UserService>(identifiers.USER_SERVICE);
   const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
   const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
@@ -29,6 +35,7 @@ const InfoForm = observer(() => {
     }
 
     await userService.updateUserInfo(userId, userInfo);
+    submitAction();
   };
 
   return (

@@ -1,11 +1,15 @@
 import React from 'react';
-import { AppWrapper, AuthPage } from 'UI';
+import { BrowserRouter as Router } from "react-router-dom";
+import { AppWrapper } from 'UI';
+import { AppRoutes } from './AppRoutes';
 
 function App() {
   return (
-    <AppWrapper>
-      <AuthPage/>
-    </AppWrapper>
+    <Router>
+      <AppWrapper>
+        <AppRoutes/>
+      </AppWrapper>
+    </Router>
   );
 }
 

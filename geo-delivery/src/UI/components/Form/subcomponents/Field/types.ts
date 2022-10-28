@@ -1,5 +1,3 @@
-import { ChangeEventHandler } from 'react';
-import { SelectChangeEvent } from '@mui/material/Select/SelectInput';
 import { BasicOption } from 'types';
 import { FormSize } from '../../types';
 
@@ -14,5 +12,5 @@ export type FieldInputProps = {
   disabled?: boolean,
   placeholder?: string,
   readOnly?: boolean,
-  password?: boolean,
+  password?: string,
 }

@@ -37,6 +37,7 @@ const Field = (props: FieldProps) => {
     name,
     required = false,
     type = FieldTypes.text,
+    password,
     validateField = () => true,
     checkForError = () => true,
     customFormat = (value) => value,
@@ -59,6 +60,7 @@ const Field = (props: FieldProps) => {
   const commonProps: FieldInputProps = {
     ...inputProps,
     size,
+    password: password ? 'password' : '',
     value: customFormat(get(formState, name), formState),
     error: submitted && ((required && !(formState[name] || typeof formState[name] === 'number')) || !checkForError(formState[name])),
     className: cnForm('field'),
