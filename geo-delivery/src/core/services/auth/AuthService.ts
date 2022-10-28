@@ -28,6 +28,7 @@ export class AuthService {
     const { access_token } = await this.apiService.post<AuthResponseDto, AuthDto>(AUTH_URL, dto);
     this.authStore.token = access_token;
     this.apiService.updateAxiosInstance();
+    await this.userService.getUserByLogin(login);
     this.storageService.setCookieItem(USER_LOGIN, login);
     this.storageService.setCookieItem(USER_PASSWORD, password);
   }
@@ -39,5 +40,12 @@ export class AuthService {
       await this.login({ login, password });
       await this.userService.getUserByLogin(login);
     }
+  }
+
+  logout() {
+    this.storageService.clearCookie();
+    this.authStore.token = '';
+    this.apiService.updateAxiosInstance();
+    this.userService.removeCurrentUser();
   }
 }

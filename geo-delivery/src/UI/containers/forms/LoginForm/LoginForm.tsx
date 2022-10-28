@@ -9,17 +9,22 @@ import './LoginForm.sass';
 const cnLoginForm = cn('LoginForm');
 
 type LoginFormProps = {
-  additionalButtonAction?: () => void;
+  submitAction?: () => void,
+  additionalButtonAction?: () => void,
 };
 
 const LoginForm = (props: LoginFormProps) => {
-  const { additionalButtonAction = () => {} } = props;
+  const {
+    submitAction = () => {},
+    additionalButtonAction = () => {}
+  } = props;
 
   const authService = container.get<AuthService>(identifiers.AUTH_SERVICE);
   const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
 
   const handleSubmit = async (formState: AuthDto) => {
     await authService.login(formState)
+    submitAction();
   };
 
   return (

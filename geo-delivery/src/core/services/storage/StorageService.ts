@@ -26,17 +26,17 @@ export class StorageService {
   }
 
   getCookieItem(name: string) {
-    const cookieData = JSON.parse(document.cookie);
+    const cookieData = JSON.parse(document.cookie || '{}');
     return cookieData[name];
   }
 
   deleteCookieItem(name: string) {
-    const cookieData = JSON.parse(document.cookie);
+    const cookieData = JSON.parse(document.cookie || '{}');
     delete cookieData[name];
     document.cookie = cookieData;
   }
 
   clearCookie() {
-    document.cookie = '';
+    document.cookie = '{}';
   }
 }
