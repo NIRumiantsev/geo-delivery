@@ -27,6 +27,10 @@ export class DeliveryService {
     return this.deliveryModel.findById(id).exec();
   }
 
+  async getTotal() {
+    return this.deliveryModel.count({}).exec();
+  }
+
   async findByParams(params: DeliverySearchParams) {
     const {
       moverId,

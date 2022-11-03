@@ -32,7 +32,7 @@ export class DeliveryController {
 
   @UseGuards(JwtGuard)
   @UsePipes(new ValidationPipe())
-  @Put(':deliveryId')
+  @Put('id/:deliveryId')
   async update(@Param('deliveryId') deliveryId: string, @Body() dto: DeliveryUpdateDto) {
     const updatedDelivery = await this.deliveryService.update(deliveryId, dto);
     if (!updatedDelivery) {
@@ -42,7 +42,7 @@ export class DeliveryController {
   }
 
   @UseGuards(JwtGuard)
-  @Delete(':deliveryId')
+  @Delete('id/:deliveryId')
   async delete(@Param('deliveryId') deliveryId: string) {
     const deletedDelivery = await this.deliveryService.delete(deliveryId);
     if (!deletedDelivery) {
@@ -50,7 +50,7 @@ export class DeliveryController {
     }
   }
 
-  @Get(':deliveryId')
+  @Get('id/:deliveryId')
   @HttpCode(200)
   async get(@Param('deliveryId') deliveryId: string) {
     const delivery = await this.deliveryService.get(deliveryId);
@@ -64,5 +64,11 @@ export class DeliveryController {
   @HttpCode(200)
   async findByParams(@Query() query: DeliverySearchParams) {
     return this.deliveryService.findByParams(query);
+  }
+
+  @Get('total')
+  @HttpCode(200)
+  async getTotal() {
+    return this.deliveryService.getTotal();
   }
 }

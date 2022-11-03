@@ -1,12 +1,11 @@
+import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import { AppBar, Typography, Toolbar, Container, IconButton, Button } from '@mui/material';
+import { AppBar, Typography, Container } from '@mui/material';
 import { cn } from 'utils';
 import { HeaderLogin } from './subcomponents';
 
 import './Header.sass';
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 
 const cnHeader = cn('Header');
 

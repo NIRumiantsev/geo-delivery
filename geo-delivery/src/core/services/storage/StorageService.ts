@@ -7,8 +7,8 @@ export class StorageService {
     window.localStorage.setItem(name, value);
   }
 
-  getLocalItem(name: string) {
-    return window.localStorage.getItem(name);
+  getLocalItem<T>(name: string): T {
+    return window.localStorage.getItem(name) as T;
   }
 
   deleteLocalItem(name: string) {
