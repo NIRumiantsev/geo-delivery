@@ -1,0 +1,21 @@
+.SearchMenu
+
+  &-close
+    position: absolute !important
+    right: -50px
+
+  &-content
+    position: relative
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    gap: 20px
+    padding: 20px 0
+    height: 350px
+    transition: height ease-out 0.3s
+
+    &_open
+      height: calc(100vh - 80px)
+      justify-content: flex-start
+      gap: 50px

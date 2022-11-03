@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import { omit, pick } from 'lodash';
+import { omit } from 'lodash';
 import { Form } from 'UI';
 import { UserInfoDto, UserInfoFormDto } from 'types';
 import { container, identifiers } from 'core';
@@ -14,13 +14,13 @@ type InfoFormProps = {
   submitAction?: () => void,
 };
 
+const userService = container.get<UserService>(identifiers.USER_SERVICE);
+const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
+const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
+const autoService = container.get<AutoService>(identifiers.AUTO_SERVICE);
+
 const InfoForm = observer((props: InfoFormProps) => {
   const { submitAction = () => {} } = props;
-
-  const userService = container.get<UserService>(identifiers.USER_SERVICE);
-  const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
-  const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
-  const autoService = container.get<AutoService>(identifiers.AUTO_SERVICE);
 
   const userId = userStore.user?._id;
   const userRole = storageService.getLocalItem(USER_ROLE);

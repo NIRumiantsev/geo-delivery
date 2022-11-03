@@ -31,7 +31,7 @@ export class OrderController {
 
   @UseGuards(JwtGuard)
   @UsePipes(new ValidationPipe())
-  @Put(':deliveryId')
+  @Put('id/:deliveryId')
   async update(@Param('deliveryId') deliveryId: string, @Body() dto: OrderUpdateDto) {
     const updatedDelivery = await this.orderService.update(deliveryId, dto);
     if (!updatedDelivery) {
@@ -41,7 +41,7 @@ export class OrderController {
   }
 
   @UseGuards(JwtGuard)
-  @Delete(':deliveryId')
+  @Delete('id/:deliveryId')
   async delete(@Param('deliveryId') deliveryId: string) {
     const deletedDelivery = await this.orderService.delete(deliveryId);
     if (!deletedDelivery) {
@@ -49,7 +49,7 @@ export class OrderController {
     }
   }
 
-  @Get(':deliveryId')
+  @Get('id/:deliveryId')
   @HttpCode(200)
   async get(@Param('deliveryId') deliveryId: string) {
     const delivery = await this.orderService.get(deliveryId);
@@ -63,5 +63,12 @@ export class OrderController {
   @HttpCode(200)
   async findByParams(@Query() query: OrderSearchParams) {
     return this.orderService.findByParams(query);
+  }
+
+
+  @Get('total')
+  @HttpCode(200)
+  async getTotal() {
+    return this.orderService.getTotal();
   }
 }

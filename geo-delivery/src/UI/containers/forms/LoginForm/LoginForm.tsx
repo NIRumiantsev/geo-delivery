@@ -13,14 +13,16 @@ type LoginFormProps = {
   additionalButtonAction?: () => void,
 };
 
+const requiredFields = ['login', 'password'];
+
+const authService = container.get<AuthService>(identifiers.AUTH_SERVICE);
+const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
+
 const LoginForm = (props: LoginFormProps) => {
   const {
     submitAction = () => {},
     additionalButtonAction = () => {}
   } = props;
-
-  const authService = container.get<AuthService>(identifiers.AUTH_SERVICE);
-  const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
 
   const handleSubmit = async (formState: AuthDto) => {
     await authService.login(formState)
@@ -32,17 +34,19 @@ const LoginForm = (props: LoginFormProps) => {
       className={cnLoginForm()}
       title="Авторизация"
       onError={() => loggerService.error('Требуется заполнить все обязательные поля')}
-      validateForm={(formState) => Object.values(formState).every((value) => value)}
+      validateForm={(formState) => requiredFields.every((field) => formState[field])}
       onSubmit={(formState) => handleSubmit(formState as AuthDto)}
     >
       <Form.Field
-        label="E-mail / Телефон / Telegram"
+        label="E-mail / Телефон / Telegram*"
         name="login"
+        required
       />
       <Form.Field
-        label="Пароль"
+        label="Пароль*"
         name="password"
         password
+        required
       />
       <Form.Footer
         submitText="Отправить"

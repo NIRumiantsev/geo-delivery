@@ -27,6 +27,10 @@ export class OrderService {
     return this.orderModel.findById(id).exec();
   }
 
+  async getTotal() {
+    return this.orderModel.count({}).exec();
+  }
+
   async findByParams(params: OrderSearchParams) {
     const {
       departureCity,
