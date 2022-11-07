@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { DeliverySearchParams } from 'types';
+import { DeliveryDto, DeliverySearchParams } from 'types';
 import { identifiers } from 'core';
 import { ApiService } from 'core/services';
 import { DeliveryStore, deliveryStore } from 'core/stores';
-import { DELIVERY_TOTAL_URL, DELIVERY_SEARCH_URL } from './urls';
+import { DELIVERY_URL, DELIVERY_TOTAL_URL, DELIVERY_SEARCH_URL } from './urls';
 
 @injectable()
 export class DeliveryService {
@@ -20,5 +20,9 @@ export class DeliveryService {
 
   async getTotalDeliveries() {
     this.deliveryStore.totalDeliveries = await this.apiService.get(DELIVERY_TOTAL_URL);
+  }
+
+  async createDelivery(dto: DeliveryDto) {
+    await this.apiService.post(DELIVERY_URL, dto);
   }
 }

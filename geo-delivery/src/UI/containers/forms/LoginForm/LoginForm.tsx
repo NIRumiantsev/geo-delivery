@@ -1,6 +1,5 @@
 import { Form } from 'UI';
-import { container, identifiers } from 'core';
-import { AuthService, LoggerService } from 'core/services';
+import { serviceMap } from 'core';
 import { AuthDto } from 'types';
 import { cn } from 'utils';
 
@@ -13,11 +12,6 @@ type LoginFormProps = {
   additionalButtonAction?: () => void,
 };
 
-const requiredFields = ['login', 'password'];
-
-const authService = container.get<AuthService>(identifiers.AUTH_SERVICE);
-const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
-
 const LoginForm = (props: LoginFormProps) => {
   const {
     submitAction = () => {},
@@ -25,7 +19,7 @@ const LoginForm = (props: LoginFormProps) => {
   } = props;
 
   const handleSubmit = async (formState: AuthDto) => {
-    await authService.login(formState)
+    await serviceMap.auth.login(formState)
     submitAction();
   };
 
@@ -33,8 +27,7 @@ const LoginForm = (props: LoginFormProps) => {
     <Form
       className={cnLoginForm()}
       title="Авторизация"
-      onError={() => loggerService.error('Требуется заполнить все обязательные поля')}
-      validateForm={(formState) => requiredFields.every((field) => formState[field])}
+      onError={() => serviceMap.logger.error('Требуется заполнить все обязательные поля')}
       onSubmit={(formState) => handleSubmit(formState as AuthDto)}
     >
       <Form.Field

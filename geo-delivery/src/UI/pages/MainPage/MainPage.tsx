@@ -2,11 +2,11 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { Tabs, Tab } from '@mui/material';
 import { UserRole } from 'types';
 import { ActionsContainer, SearchMenu, ITEMS_PER_PAGE_OPEN, ITEMS_PER_PAGE_CLOSE } from 'UI';
-import { container, identifiers } from 'core';
-import { DeliveryService, StorageService, OrderService } from 'core/services';
+import { serviceMap } from 'core';
 import { cn } from 'utils';
 
 import './MainPage.sass';
+import { deliveryStore, orderStore } from '../../../core/stores';
 
 type LoadDataParams = { pageNumber: number, perPage: number };
 
@@ -14,29 +14,25 @@ const cnManePage = cn('MainPage');
 
 const roles: UserRole[] = ['mover', 'customer'];
 
-const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
-const deliveryService = container.get<DeliveryService>(identifiers.DELIVERY_SERVICE);
-const orderService = container.get<OrderService>(identifiers.ORDER_SERVICE);
-
 const MainPage = () => {
   const [searchMenuOpen, setSearchMenuOpen] = useState<boolean>(false);
-  const [selectedRole, setSelectedRole] = useState<UserRole>(storageService.getLocalItem<UserRole>('userRole') || roles[0]);
+  const [selectedRole, setSelectedRole] = useState<UserRole>(serviceMap.storage.getLocalItem<UserRole>('userRole') || roles[0]);
   const [itemPage, setItemPage] = useState<number>(0);
 
   useEffect(() => {
-    deliveryService.getTotalDeliveries();
-    orderService.getTotalOrders();
+    if (!deliveryStore.totalDeliveries) serviceMap.delivery.getTotalDeliveries();
+    if (!orderStore.totalOrders) serviceMap.order.getTotalOrders();
     loadData({ pageNumber: itemPage, perPage: ITEMS_PER_PAGE_CLOSE });
   }, []);
 
   const loadData = async (params: LoadDataParams) => {
-    await orderService.searchOrders(params);
-    await deliveryService.searchDeliveries(params);
+    await serviceMap.order.searchOrders(params);
+    await serviceMap.delivery.searchDeliveries(params);
   };
 
   const handleSelectRole = (e: SyntheticEvent, index: number) => {
     const role = roles[index];
-    storageService.setCookieItem('userRole', role);
+    serviceMap.storage.setLocalItem('userRole', role);
     setSelectedRole(role);
   };
 

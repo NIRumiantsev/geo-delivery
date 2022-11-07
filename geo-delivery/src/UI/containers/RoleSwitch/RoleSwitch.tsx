@@ -1,8 +1,8 @@
 import { ButtonGroup, Button } from '@mui/material';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import { container, identifiers } from 'core';
-import { StorageService, USER_ROLE } from 'core/services';
+import { serviceMap } from 'core';
+import { USER_ROLE } from 'core/services';
 import { UserRole } from 'types';
 
 export type RoleSwitchProps = {
@@ -12,10 +12,8 @@ export type RoleSwitchProps = {
 const RoleSwitch = (props: RoleSwitchProps) => {
   const { handleChangeRole } = props;
 
-  const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
-
   const handleSelectRole = (role: UserRole) => {
-    storageService.setLocalItem(USER_ROLE, role);
+    serviceMap.storage.setLocalItem(USER_ROLE, role);
     handleChangeRole(role);
   };
 

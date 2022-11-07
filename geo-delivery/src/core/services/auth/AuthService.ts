@@ -44,6 +44,7 @@ export class AuthService {
 
   logout() {
     this.storageService.clearCookie();
+    this.storageService.clearLocal();
     this.authStore.token = '';
     this.apiService.updateAxiosInstance();
     this.userService.removeCurrentUser();

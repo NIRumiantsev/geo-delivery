@@ -1,20 +1,23 @@
 import { inject, injectable } from 'inversify';
 import { identifiers } from 'core';
 import { ApiService } from 'core/services'
-import { AutoCreateDto } from 'types';
-import { AUTO_CREATE_URL } from './urls';
+import { AutoStore, autoStore } from 'core/stores';
+import { AutoCreateDto, AutoDto } from 'types';
+import { AUTO_URL, AUTO_LIST_USER_URL } from './urls';
 
 @injectable()
 export class AutoService {
-  private apiService: ApiService;
+  private autoStore: AutoStore
 
-  constructor(
-    @inject(identifiers.API_SERVICE) apiService: ApiService,
-  ) {
-    this.apiService = apiService;
+  constructor(@inject(identifiers.API_SERVICE) private readonly apiService: ApiService,) {
+    this.autoStore = autoStore;
   }
 
   async createUserAutoList(dto: AutoCreateDto[]) {
-    return await this.apiService.post<string[], AutoCreateDto[]>(AUTO_CREATE_URL, dto);
+    return await this.apiService.post<string[], AutoCreateDto[]>(AUTO_URL, dto);
+  }
+
+  async getUserAutoList(userId: string) {
+    this.autoStore.autoList = await this.apiService.get<AutoDto[]>(AUTO_LIST_USER_URL(userId));
   }
 }
