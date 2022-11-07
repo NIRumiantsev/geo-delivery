@@ -26,9 +26,9 @@ const Row = (props: RowProps) => {
   } = props;
 
   return (
-    <div>
+    <div className={cnForm('row')}>
       {title}
-      <div className={cnForm('row')}>
+      <div className={cnForm('container')}>
         {children}
         <div className={cnForm('controllers')}>
           {showAdd && <IconButton onClick={handleAdd}><AddIcon/></IconButton>}

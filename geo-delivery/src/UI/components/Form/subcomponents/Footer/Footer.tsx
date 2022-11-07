@@ -28,7 +28,7 @@ const Footer = (props: FooterProps) => {
   const { formChanged, onFormSubmit, onFormCancel } = useFormContext();
 
   return (
-    <div className={cnForm('footer')}>
+    <div className={cnForm('container')}>
       {leftButtonShown && (
         <Button
           variant="text"
@@ -37,7 +37,7 @@ const Footer = (props: FooterProps) => {
           {leftButtonText}
         </Button>
       )}
-      <div className={cnForm('container')}>
+      <div className={cnForm('footer')}>
         {cancelShown && (
           <Button
             variant="outlined"

@@ -1,13 +1,15 @@
-import { ReactElement, useState, CSSProperties, useMemo } from 'react';
-import { set, cloneDeep, isEqual } from 'lodash';
+import { ReactElement, useState, CSSProperties, useMemo, useEffect, Children } from 'react';
+import { set, cloneDeep, isEqual, get } from 'lodash';
 import { FormContext } from './context';
 import { Field, Row, Footer, Block } from './subcomponents';
 import { FormSize, FormState } from './types';
 import { cnForm } from './helpers';
 import { Typography } from '@mui/material';
 
+type FormChildren = ReactElement | (ReactElement | null)[] | null;
+
 type FormProps = {
-  children: ReactElement | (ReactElement | null)[] | null,
+  children: FormChildren,
   defaultState?: FormState,
   className?: string,
   style?: CSSProperties,
@@ -17,8 +19,8 @@ type FormProps = {
   customFormChangeCheck?: boolean,
   onSubmit: (formState: FormState) => void,
   onCancel?: () => void,
-  validateForm?: (formState: FormState) => boolean,
   onError?: () => void,
+  customValidateForm?: (formState: FormState) => boolean,
   customChangeHandler?: (formState: FormState, fieldName: string) => FormState,
 };
 
@@ -33,13 +35,31 @@ const Form = (props: FormProps) => {
     className,
     onSubmit,
     onCancel = () => {},
-    validateForm = () => true,
     onError = () => {},
+    customValidateForm = () => true,
     customChangeHandler = (formState) => formState,
   } = props;
 
   const [formState, setFormState] = useState<FormState>(defaultState);
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [requiredFields, setRequiredFields] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!children) return;
+    const newRequiredFields: Set<string> = new Set();
+    const checkRequiredChildren = (children: FormChildren) => {
+      Children.map(children, (child) => {
+        if (child?.props?.required) {
+          newRequiredFields.add(child?.props?.name);
+        }
+        if (child?.props?.children?.length > 0) {
+          checkRequiredChildren(child?.props?.children);
+        }
+      });
+    };
+    checkRequiredChildren(children);
+    setRequiredFields(Array.from(newRequiredFields));
+  }, [children]);
 
   const formChanged = useMemo(() => !isEqual(formState, defaultState) || customFormChangeCheck ,
     [defaultState, formState, customFormChangeCheck]
@@ -51,9 +71,15 @@ const Form = (props: FormProps) => {
     setFormState(customChangeHandler(newState, fieldName));
   };
 
+  const validateForm = () => {
+    const isRequiredFields = requiredFields.length === 0 || requiredFields.every((field) => get(formState, field));
+    const isCustomValid = customValidateForm(formState);
+    return isRequiredFields && isCustomValid;
+  };
+
   const onFormSubmit = () => {
     setSubmitted(true);
-    if (validateForm(formState)) {
+    if (validateForm()) {
       onSubmit(formState);
       setSubmitted(false);
     } else {

@@ -7,4 +7,5 @@ export const identifiers = {
   ORDER_SERVICE: 'OrderService',
   STORAGE_SERVICE: 'StorageService',
   USER_SERVICE: 'UserService',
+  SEARCH_SERVICE: 'SearchService',
 };

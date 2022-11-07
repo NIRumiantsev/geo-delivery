@@ -2,28 +2,21 @@ import { observer } from 'mobx-react';
 import { omit } from 'lodash';
 import { Form } from 'UI';
 import { UserInfoDto, UserInfoFormDto } from 'types';
-import { container, identifiers } from 'core';
-import { LoggerService, StorageService, UserService, USER_ROLE, AutoService } from 'core/services';
+import { serviceMap } from 'core';
+import { USER_ROLE } from 'core/services';
 import { userStore } from 'core/stores';
 import { userTypeOptions } from './constants';
 import { InfoFormAuto } from './subcomponents';
-
-const requiredFields = ['name', 'city', 'type'];
 
 type InfoFormProps = {
   submitAction?: () => void,
 };
 
-const userService = container.get<UserService>(identifiers.USER_SERVICE);
-const loggerService = container.get<LoggerService>(identifiers.LOGGER_SERVICE);
-const storageService = container.get<StorageService>(identifiers.STORAGE_SERVICE);
-const autoService = container.get<AutoService>(identifiers.AUTO_SERVICE);
-
 const InfoForm = observer((props: InfoFormProps) => {
   const { submitAction = () => {} } = props;
 
   const userId = userStore.user?._id;
-  const userRole = storageService.getLocalItem(USER_ROLE);
+  const userRole = serviceMap.storage.getLocalItem(USER_ROLE);
 
   const handleSubmit = async (formState: UserInfoFormDto) => {
     if (!userId) return;
@@ -31,18 +24,17 @@ const InfoForm = observer((props: InfoFormProps) => {
     const userInfo: UserInfoDto = omit(formState, 'auto');
 
     if (formState.auto) {
-      userInfo.autoIdList = await autoService.createUserAutoList(formState.auto);
+      userInfo.autoIdList = await serviceMap.auto.createUserAutoList(formState.auto.map((auto) => ({...auto, userId})));
     }
 
-    await userService.updateUserInfo(userId, userInfo);
+    await serviceMap.user.updateUserInfo(userId, userInfo);
     submitAction();
   };
 
   return (
     <Form
       title="Личная информация"
-      onError={() => loggerService.error('Требуется заполнить все обязательные поля')}
-      validateForm={(formState) => requiredFields.every((field) => formState[field])}
+      onError={() => serviceMap.logger.error('Требуется заполнить все обязательные поля')}
       onSubmit={(formState: unknown) => handleSubmit(formState as UserInfoFormDto)}
     >
       <Form.Field

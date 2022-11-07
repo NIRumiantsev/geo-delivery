@@ -3,7 +3,7 @@ import { BasicOption } from 'types';
 import {
   TextField,
   NumberField,
-  SelectField,
+  SelectField, DateField, CityField,
 } from './subcomponents';
 import { FieldInputProps } from './types';
 import { useFormContext } from '../../context';
@@ -14,6 +14,8 @@ enum FieldTypes {
   text = 'text',
   number = 'number',
   select = 'select',
+  date = 'date',
+  city = 'city',
 }
 
 type FieldProps = {
@@ -62,7 +64,7 @@ const Field = (props: FieldProps) => {
     size,
     password: password ? 'password' : '',
     value: customFormat(get(formState, name), formState),
-    error: submitted && ((required && !(formState[name] || typeof formState[name] === 'number')) || !checkForError(formState[name])),
+    error: submitted && ((required && !(get(formState, name) || typeof get(formState, name) === 'number')) || !checkForError(formState[name])),
     className: cnForm('field'),
     onChange: (value: string | number) => handleChangeField(customFormat(value, formState)),
   };
@@ -71,6 +73,8 @@ const Field = (props: FieldProps) => {
     text: <TextField {...commonProps}/>,
     number: <NumberField {...commonProps}/>,
     select: <SelectField {...commonProps}/>,
+    date: <DateField {...commonProps}/>,
+    city: <CityField {...commonProps}/>,
   };
 
   return fieldMap[type]

@@ -1,24 +1,20 @@
 import { Form, ListType } from 'UI';
-import { container, identifiers } from 'core';
-import { DeliveryService, OrderService } from 'core/services';
+import { serviceMap } from 'core';
 import { DeliverySearchParams, OrderSearchParams } from 'types';
 
 export type SearchFormProps = {
   listType: ListType,
 };
 
-const deliveryService = container.get<DeliveryService>(identifiers.DELIVERY_SERVICE);
-const orderService = container.get<OrderService>(identifiers.ORDER_SERVICE);
-
 const SearchForm = (props: SearchFormProps) => {
   const { listType } = props;
 
   const handleSearchDelivery = async (params: DeliverySearchParams) => {
-    await deliveryService.searchDeliveries(params);
+    await serviceMap.delivery.searchDeliveries(params);
   };
 
   const handleSearchOrder = async (params: OrderSearchParams) => {
-    await orderService.searchOrders(params);
+    await serviceMap.order.searchOrders(params);
   };
 
   return (
@@ -31,10 +27,12 @@ const SearchForm = (props: SearchFormProps) => {
           <Form.Field
             label="Город отправки"
             name="departureCity"
+            type="city"
           />
           <Form.Field
             label="Город получения"
             name="destinationCity"
+            type="city"
           />
           <Form.Field
             label="Пассажиры"

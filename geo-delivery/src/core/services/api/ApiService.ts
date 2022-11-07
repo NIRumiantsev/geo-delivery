@@ -40,21 +40,25 @@ export class ApiService {
   }
 
   async get<R>(url: string, config: AxiosRequestConfig = {}) {
+    this.updateAxiosInstance();
     const response = await this.axiosInstance.get<R>(url, { ...this.axiosInstance, ...config });
     return response.data;
   }
 
   async post<R, D>(url: string, data?: D, config: AxiosRequestConfig = {}) {
+    this.updateAxiosInstance();
     const response = await this.axiosInstance.post<R>(url, data || '', { ...this.axiosInstance, ...config });
     return response.data;
   }
 
   async put<R, D>(url: string, data?: D, config: AxiosRequestConfig = {}) {
+    this.updateAxiosInstance();
     const response = await this.axiosInstance.put<R>(url, data || '', { ...this.axiosInstance, ...config });
     return response.data;
   }
 
   async delete<R>(url: string, config: AxiosRequestConfig = {}) {
+    this.updateAxiosInstance();
     const response = await this.axiosInstance.delete<R>(url, { ...this.axiosInstance, ...config });
     return response.data;
   }
