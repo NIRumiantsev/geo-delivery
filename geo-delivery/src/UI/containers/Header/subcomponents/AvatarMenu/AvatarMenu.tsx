@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Avatar, Button, Menu, Typography } from '@mui/material';
 import { serviceMap } from 'core';
 import { userStore } from 'core/stores';
+import { UserAvatar } from 'UI';
 import { cn } from 'utils';
 
 import './AvatarMenu.sass';
@@ -22,15 +23,13 @@ const AvatarMenu = observer(() => {
 
   return (
     <div className={cnAvatarMenu()}>
-      <Avatar
-        ref={avatarRef}
-        alt={currentUser?.info?.name}
-        src={currentUser?.info?.avatar}
-        sx={{ bgcolor: '#bada55' }}
-        onClick={() => setMenuOpened(true)}
-      >
-        {currentUser?.info?.name?.split(' ').map((word) => word[0]).join('')}
-      </Avatar>
+      {currentUser && (
+        <UserAvatar
+          user={currentUser}
+          ref={avatarRef}
+          onClick={() => setMenuOpened(true)}
+        />
+      )}
       <Menu
         className={cnAvatarMenu('menu')}
         open={menuOpened}

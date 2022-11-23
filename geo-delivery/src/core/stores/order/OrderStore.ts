@@ -1,9 +1,11 @@
 import { makeAutoObservable } from 'mobx';
-import { OrderDto } from 'types';
+import { OrderDto, UserDto } from 'types';
 
 class OrderStore {
   private _orderList: OrderDto[] = [];
   private _totalOrders: number = 0;
+  private _selectedOrder: OrderDto | null = null;
+  private _selectedOrderCustomer: UserDto | null = null;
 
   constructor() {
     makeAutoObservable(this)
@@ -23,6 +25,22 @@ class OrderStore {
 
   set totalOrders(total) {
     this._totalOrders = total;
+  }
+
+  get selectedOrder() {
+    return this._selectedOrder;
+  }
+
+  set selectedOrder(order) {
+    this._selectedOrder = order;
+  }
+
+  get selectedOrderCustomer() {
+    return this._selectedOrderCustomer;
+  }
+
+  set selectedOrderCustomer(customer) {
+    this._selectedOrderCustomer = customer;
   }
 }
 

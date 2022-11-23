@@ -17,12 +17,20 @@ export class UserService {
     this.apiService = apiService;
   }
 
-  async getUser(userId: string) {
-    this.userStore.user = await this.apiService.get<UserDto>(USER_ID_URL(userId));
+  async getUserById(userId: string) {
+    return await this.apiService.get<UserDto>(USER_ID_URL(userId));
+  }
+
+  async getCurrentUser(userId: string) {
+    this.userStore.user = await this.getUserById(userId);
   }
 
   async getUserByLogin(userLogin: string) {
-    this.userStore.user = await this.apiService.get<UserDto>(USER_LOGIN_URL(userLogin));
+    return await this.apiService.get<UserDto>(USER_LOGIN_URL(userLogin));
+  }
+
+  async getCurrentUserByLogin(userLogin: string) {
+    this.userStore.user = await this.getUserByLogin(userLogin);
   }
 
   async createUser(dto: UserCreateDto) {

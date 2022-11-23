@@ -1,8 +1,8 @@
 import { Container, Drawer, IconButton, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { ItemList, SearchForm, ListType, ITEMS_PER_PAGE_OPEN, ITEMS_PER_PAGE_CLOSE } from 'UI';
+import { ItemList, SearchForm, ITEMS_PER_PAGE_OPEN, ITEMS_PER_PAGE_CLOSE } from 'UI';
 import { cn } from 'utils';
-import { UserRole } from 'types';
+import { UserRole, ListType } from 'types';
 
 import './SearchMenu.sass';
 

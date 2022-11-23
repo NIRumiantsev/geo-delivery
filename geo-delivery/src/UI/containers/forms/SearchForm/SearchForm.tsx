@@ -1,6 +1,6 @@
-import { Form, ListType } from 'UI';
+import { Form } from 'UI';
 import { serviceMap } from 'core';
-import { DeliverySearchParams, OrderSearchParams } from 'types';
+import { DeliverySearchParams, OrderSearchParams, ListType } from 'types';
 
 export type SearchFormProps = {
   listType: ListType,
