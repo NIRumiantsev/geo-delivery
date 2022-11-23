@@ -3,7 +3,7 @@ import { identifiers } from 'core';
 import { ApiService } from 'core/services'
 import { AutoStore, autoStore } from 'core/stores';
 import { AutoCreateDto, AutoDto } from 'types';
-import { AUTO_URL, AUTO_LIST_USER_URL } from './urls';
+import { AUTO_URL, AUTO_ID_URL, AUTO_LIST_USER_URL } from './urls';
 
 @injectable()
 export class AutoService {
@@ -19,5 +19,9 @@ export class AutoService {
 
   async getUserAutoList(userId: string) {
     this.autoStore.autoList = await this.apiService.get<AutoDto[]>(AUTO_LIST_USER_URL(userId));
+  }
+
+  async getAutoById(autoId: string) {
+    return await this.apiService.get<AutoDto>(AUTO_ID_URL(autoId));
   }
 }

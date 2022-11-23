@@ -3,14 +3,12 @@ import { observer } from 'mobx-react';
 import { Pagination, Typography } from '@mui/material';
 import { ItemCard } from 'UI';
 import { deliveryStore, orderStore } from 'core/stores';
-import { DeliveryItem } from 'types';
+import { DeliveryItem, ListType } from 'types';
 import { cn } from 'utils';
 
 import './ItemList.sass';
 
 const cnItemList = cn('ItemList');
-
-export type ListType = 'delivery' | 'order';
 
 export type ItemListProps = {
   listType: ListType,
@@ -32,6 +30,8 @@ const ItemList = observer((props: ItemListProps) => {
   const totalOrders = orderStore.totalOrders;
 
   const deliveryItems: DeliveryItem[] = useMemo(() => deliveryList.map((delivery) => ({
+    id: delivery._id,
+    type: 'delivery',
     departure: delivery.departureCity,
     destination: delivery.destination,
     cargo: delivery.cargoLeft || 0,
@@ -39,6 +39,8 @@ const ItemList = observer((props: ItemListProps) => {
   })), [deliveryList]);
 
   const orderItems: DeliveryItem[] = useMemo(() => orderList.map((order) => ({
+    id: order._id,
+    type: 'order',
     departure: order.departureCity,
     destination: order.destination,
     cargo: order.cargo || 0,

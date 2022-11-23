@@ -1,4 +1,5 @@
-import { Card, CardContent, Typography, Badge, Avatar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, Typography, Avatar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import SouthOutlinedIcon from '@mui/icons-material/SouthOutlined';
@@ -28,14 +29,25 @@ const ItemCard = (props: ItemCardProps) => {
   } = props;
 
   const {
+    id,
+    type,
     passengers,
     cargo,
     departure,
     destination,
   } = item;
 
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/info/${type}/${id}`);
+  };
+
   return (
-    <Card className={cnItemCard()}>
+    <Card
+      className={cnItemCard()}
+      onClick={handleClick}
+    >
       <CardContent className={cnItemCard('content')}>
         <div className={cnItemCard('column')}>
           <div className={cnItemCard('city')}>

@@ -1,9 +1,12 @@
 import { makeAutoObservable } from 'mobx';
-import { DeliveryDto } from 'types';
+import { DeliveryDto, UserDto, AutoDto } from 'types';
 
 class DeliveryStore {
   private _deliveryList: DeliveryDto[] = [];
   private _totalDeliveries: number = 0;
+  private _selectedDelivery: DeliveryDto | null = null;
+  private _selectedDeliveryMover: UserDto | null = null;
+  private _selectedDeliveryAuto: AutoDto | null = null;
 
   constructor() {
     makeAutoObservable(this)
@@ -23,6 +26,30 @@ class DeliveryStore {
 
   set totalDeliveries(total) {
     this._totalDeliveries = total;
+  }
+
+  get selectedDelivery() {
+    return this._selectedDelivery;
+  }
+
+  set selectedDelivery(delivery) {
+    this._selectedDelivery = delivery;
+  }
+
+  get selectedDeliveryMover() {
+    return this._selectedDeliveryMover;
+  }
+
+  set selectedDeliveryMover(mover) {
+    this._selectedDeliveryMover = mover;
+  }
+
+  get selectedDeliveryAuto() {
+    return this._selectedDeliveryAuto;
+  }
+
+  set selectedDeliveryAuto(auto) {
+    this._selectedDeliveryAuto = auto;
   }
 }
 

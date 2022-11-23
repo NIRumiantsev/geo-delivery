@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { Avatar, IconButton } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { userStore } from 'core/stores';
 import { cn } from 'utils';
+import { AvatarMenu } from '../AvatarMenu';
 
 import './HeaderLogin.sass';
-import { AvatarMenu } from '../AvatarMenu';
 
 const cnHeaderLogin = cn('HeaderLogin');
 
