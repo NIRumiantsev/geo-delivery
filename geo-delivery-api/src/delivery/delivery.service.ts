@@ -1,10 +1,10 @@
+import { FilterQuery } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { DeliveryModel } from './delivery.model';
 import { DeliveryDto, DeliveryUpdateDto } from './dto';
 import { DeliverySearchParams } from './types';
-import { DocumentQuery, FilterQuery } from 'mongoose';
 
 @Injectable()
 export class DeliveryService {

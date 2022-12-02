@@ -9,6 +9,8 @@ import { ChatModule } from './chat/chat.module';
 import { getMongoConfig } from './configs';
 import { AutoModule } from './auto/auto.module';
 import { SearchModule } from './search/search.module';
+import { OfferModule } from './offer/offer.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -24,7 +26,9 @@ import { SearchModule } from './search/search.module';
     DeliveryModule,
     ChatModule,
     AutoModule,
-    SearchModule
+    SearchModule,
+    OfferModule,
+    NotificationModule
   ],
 })
 export class AppModule {}
