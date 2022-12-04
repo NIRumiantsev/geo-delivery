@@ -16,6 +16,7 @@ import { DeliveryModel } from './delivery.model';
       }
     ])
   ],
-  providers: [DeliveryService]
+  providers: [DeliveryService],
+  exports: [DeliveryService],
 })
 export class DeliveryModule {}

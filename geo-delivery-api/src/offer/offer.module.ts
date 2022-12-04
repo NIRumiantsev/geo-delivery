@@ -7,6 +7,10 @@ import { UserService } from '../user/user.service';
 import { OrderService } from '../order/order.service';
 import { DeliveryService } from '../delivery/delivery.service';
 import { NotificationService } from '../notification/notification.service';
+import { UserModule } from '../user/user.module';
+import { OrderModule } from '../order/order.module';
+import { DeliveryModule } from '../delivery/delivery.module';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   controllers: [OfferController],
@@ -19,10 +23,10 @@ import { NotificationService } from '../notification/notification.service';
         }
       }
     ]),
-    UserService,
-    OrderService,
-    DeliveryService,
-    NotificationService,
+    UserModule,
+    OrderModule,
+    DeliveryModule,
+    NotificationModule,
   ],
   providers: [OfferService]
 })

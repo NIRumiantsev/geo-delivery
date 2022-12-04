@@ -16,6 +16,7 @@ import { OrderModel } from './order.model';
       }
     ])
   ],
-  providers: [OrderService]
+  providers: [OrderService],
+  exports: [OrderService],
 })
 export class OrderModule {}
